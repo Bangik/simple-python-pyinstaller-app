@@ -1,7 +1,7 @@
 node {
     docker.image('python:2-alpine').inside {
         stage('Build') {
-            sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
+            sh 'python -m py_compile /var/jenkins_home/workspace/submission-cicd-pipeline-bangik/sources/add2vals.py /var/jenkins_home/workspace/submission-cicd-pipeline-bangik/sources/calc.py' 
             stash includes: 'sources/*.py*', name: 'compiled-results'
         }
         stage('Test') {
