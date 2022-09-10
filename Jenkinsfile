@@ -17,7 +17,7 @@ node {
     docker.image('python:2-alpine').inside {
         withEnv(['VOLUME=\'$(pwd)/sources:/src\'', 'IMAGE=\'cdrx/pyinstaller-linux:python2\'']) {
             stage('Deploy') {
-                dir('env.BUILD_ID') {
+                dir(env.BUILD_ID) {
                     unstash name: 'compiled-results'
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
                     if (currentBuild.result == null || currentBuild.result == 'SUCCESS'){
