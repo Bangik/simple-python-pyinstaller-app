@@ -27,9 +27,8 @@ node {
         }
         stage('Deploy to heroku') {
             withCredentials([usernamePassword(credentialsId: '9564d061-f057-4011-9abb-87affcda124a', usernameVariable: 'herokuapi', passwordVariable: '196e6f29-f79f-44a1-b085-0f4edd8a8028')]) {
-                sh "heroku container:login"
-                sh "heroku container:push web --app simple-python-pyinstaller-app"
-                sh "heroku container:release web --app simple-python-pyinstaller-app"
+                sh "sudo curl https://cli-assets.heroku.com/install.sh | sh"
+                sh "/usr/local/bin/heroku --version"
             }
         }
     }
