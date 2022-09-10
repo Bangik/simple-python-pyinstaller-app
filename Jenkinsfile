@@ -24,9 +24,8 @@ node {
                 sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
             }
             sh "sudo curl https://cli-assets.heroku.com/install.sh | sh"
-            withEnv(['PATH+HEROKU=/use/local/bin/']) {
-                sh "heroku --version"
-            }
+            sh "/use/local/bin/heroku --version"
+            
         }
     }
 }
