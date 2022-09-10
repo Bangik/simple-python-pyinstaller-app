@@ -12,20 +12,24 @@ node {
         }
         
     }
-    withEnv(["VOLUME=${pwd()}\'/sources:/src\'", 'IMAGE=\'cdrx/pyinstaller-linux:python2\'']) {
-        // input 'Lanjutkan ke tahap Deploy?'
-        stage('Deploy') {
-            unstash name: 'compiled-results'
-            sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
-            if (currentBuild.result == null || currentBuild.result == 'SUCCESS'){
-                sh 'sources/dist/add2vals X Y'
-                // sleep time: 1, unit: 'MINUTES'
-                archiveArtifacts artifacts: "sources/dist/add2vals", followSymlinks: false
-                sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
-            }
-            sh "sudo curl https://cli-assets.heroku.com/install.sh | sh"
-            sh "/use/local/bin/heroku --version"
+    // withEnv(["VOLUME=${pwd()}\'/sources:/src\'", 'IMAGE=\'cdrx/pyinstaller-linux:python2\'']) {
+    //     // input 'Lanjutkan ke tahap Deploy?'
+    //     stage('Deploy') {
+    //         unstash name: 'compiled-results'
+    //         sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
+    //         if (currentBuild.result == null || currentBuild.result == 'SUCCESS'){
+    //             sh 'sources/dist/add2vals X Y'
+    //             // sleep time: 1, unit: 'MINUTES'
+    //             archiveArtifacts artifacts: "sources/dist/add2vals", followSymlinks: false
+    //             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
+    //         }
             
+    //     }
+    // }
+    withEnv(['PATH+HEROKU=/use/local/bin/']) {
+        stage('Deploy to heroku'){
+            sh "sudo curl https://cli-assets.heroku.com/install.sh | sh"
+            sh "heroku --version"
         }
     }
 }
