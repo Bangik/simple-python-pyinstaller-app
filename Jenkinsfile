@@ -23,7 +23,7 @@ node {
                 archiveArtifacts artifacts: "sources/dist/add2vals", followSymlinks: false
                 sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
             }
-            sh "curl https://cli-assets.heroku.com/install.sh | sh"
+            sh "sudo curl https://cli-assets.heroku.com/install.sh | sh"
             sh "heroku --version"
         }
     }
