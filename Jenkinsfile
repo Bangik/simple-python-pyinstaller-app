@@ -1,7 +1,6 @@
 node {
     docker.image('python:2-alpine').inside {
         stage('Build') {
-            sh "sudo curl https://cli-assets.heroku.com/install.sh | sh"
             sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
             stash name: 'compiled-results', includes: 'sources/*.py*'
         }
@@ -28,7 +27,10 @@ node {
         }
         stage('Deploy to heroku') {
             withCredentials([usernamePassword(credentialsId: '9564d061-f057-4011-9abb-87affcda124a', usernameVariable: 'herokuapi', passwordVariable: '196e6f29-f79f-44a1-b085-0f4edd8a8028')]) {
-                sh "heroku --version"
+                sh "git:remote -a submission-cicd-bangik"
+                sh "git add ."
+                sh 'git commit -am "make it better"'
+                sh "git push heroku master"
             }
         }
     }
