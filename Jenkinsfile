@@ -26,7 +26,7 @@ node {
             
     //     }
     // }
-    withEnv(['PATH+HEROKU=/use/local/bin/']) {
+    withEnv(['PATH+HEROKU=/usr/local/bin/']) {
         stage('Deploy to heroku'){
             sh "sudo curl https://cli-assets.heroku.com/install.sh | sh"
             sh "ls /usr/local/bin"
