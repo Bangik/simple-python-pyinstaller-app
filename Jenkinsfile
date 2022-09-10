@@ -14,7 +14,7 @@ node {
         }
         
     }
-    withEnv(['VOLUME=\'$(pwd)/sources:/src\'', 'IMAGE=\'cdrx/pyinstaller-linux:python2\'']) {
+    withEnv(['VOLUME=\'${pwd()}/sources:/src\'', 'IMAGE=\'cdrx/pyinstaller-linux:python2\'']) {
         stage('Deploy') {
             dir(env.BUILD_ID) {
                 unstash name: 'compiled-results'
