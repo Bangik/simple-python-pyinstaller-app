@@ -15,11 +15,12 @@ node {
         
     }
     withEnv(["VOLUME=${pwd()}\'/sources:/src\'", 'IMAGE=\'cdrx/pyinstaller-linux:python2\'']) {
+        input 'Lanjutkan ke tahap Deploy?'
         stage('Deploy') {
             unstash name: 'compiled-results'
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
-            sleep time: 1, unit: 'MINUTES'
             if (currentBuild.result == null || currentBuild.result == 'SUCCESS'){
+                sleep time: 1, unit: 'MINUTES'
                 archiveArtifacts artifacts: "sources/dist/add2vals", followSymlinks: false
                 sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
             }
