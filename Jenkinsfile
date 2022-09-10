@@ -27,7 +27,7 @@ node {
         }
         stage('Deploy to heroku') {
             withCredentials([usernamePassword(credentialsId: '9564d061-f057-4011-9abb-87affcda124a', usernameVariable: 'herokuapi', passwordVariable: '196e6f29-f79f-44a1-b085-0f4edd8a8028')]) {
-                sh "git:remote -a submission-cicd-bangik"
+                sh "git add remote heroku https://git.heroku.com/submission-cicd-bangik.git"
                 sh "git add ."
                 sh 'git commit -am "make it better"'
                 sh "git push heroku master"
