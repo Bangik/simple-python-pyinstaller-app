@@ -1,8 +1,6 @@
 node {
     docker.image('python:2-alpine').inside {
         stage('Build') {
-            // sh 'ls'
-            // echo pwd()
             sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
             stash name: 'compiled-results', includes: 'sources/*.py*'
         }
@@ -20,6 +18,7 @@ node {
             unstash name: 'compiled-results'
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
             if (currentBuild.result == null || currentBuild.result == 'SUCCESS'){
+                sh 'ls'
                 sleep time: 1, unit: 'MINUTES'
                 archiveArtifacts artifacts: "sources/dist/add2vals", followSymlinks: false
                 sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
