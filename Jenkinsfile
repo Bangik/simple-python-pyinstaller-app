@@ -29,7 +29,7 @@ node {
     withEnv(['PATH+HEROKU=/usr/local/bin/']) {
         stage('Deploy to heroku'){
             sh "sudo curl https://cli-assets.heroku.com/install.sh | sh"
-            sh "ls /usr/local/bin"
+            sh "ls /var/jenkins_home/workspace/submission-cicd-pipeline-bangik@tmp/durable-4578665f"
             // sh "/usr/local/lib/heroku/bin/heroku --version"
         }
     }
