@@ -18,7 +18,7 @@ node {
             unstash name: 'compiled-results'
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
             if (currentBuild.result == null || currentBuild.result == 'SUCCESS'){
-                sh 'cd sources/dist && ls'
+                sh 'cd sources/dist && python add2vals'
                 sleep time: 1, unit: 'MINUTES'
                 archiveArtifacts artifacts: "sources/dist/add2vals", followSymlinks: false
                 sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
